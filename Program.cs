@@ -23,6 +23,8 @@ namespace Dialang.Compilation.Tool
             Console.WriteLine($"Compiling to '{Path.TrimEndingDirectorySeparator(output)}\\{compiler.Project.Name}'...");
             CompileResult r = compiler.Compile(output);
 
+            Console.WriteLine();
+            Console.WriteLine($"Total time was: {compiler.Project.Elapsed:0.00} seconds!");
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey(true);
         }
