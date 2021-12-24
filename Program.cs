@@ -6,6 +6,7 @@ namespace Dialang.Compilation.Tool
     {
         private static string input;
         private static string output;
+        private static Compiler compiler;
 
         private static void Main(string[] args)
         {
@@ -16,6 +17,14 @@ namespace Dialang.Compilation.Tool
                 input = args[0];
                 output = args[1];
             }
+
+            compiler = new Compiler(input, Console.WriteLine);
+
+            Console.WriteLine($"Compiling to '{Path.TrimEndingDirectorySeparator(output)}\\{compiler.Project.Name}'...");
+            CompileResult r = compiler.Compile(output);
+
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadKey(true);
         }
 
         private static void ManualSetup()
@@ -33,6 +42,9 @@ namespace Dialang.Compilation.Tool
                 goto GetInputPath;
             }
 
+            Console.Clear();
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine("Please provide a valid output directory:");
             output = Console.ReadLine()!;
 
             Console.Clear();
