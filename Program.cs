@@ -6,11 +6,11 @@ namespace Dialang.Compilation.Tool
     {
         private static string input;
         private static string output;
-        private static Compiler compiler;
+        private static ProjectCompiler compiler;
 
         private static void Main(string[] args)
         {
-            if (args.Length < 2 || !Compiler.ValidInput(args[0]))
+            if (args.Length < 2 || !ProjectCompiler.ValidInput(args[0]))
                 ManualSetup();
             else
             {
@@ -18,10 +18,10 @@ namespace Dialang.Compilation.Tool
                 output = args[1];
             }
 
-            compiler = new Compiler(input, Console.WriteLine);
+            compiler = new ProjectCompiler(input, Console.WriteLine);
 
             Console.WriteLine($"Compiling to '{Path.TrimEndingDirectorySeparator(output)}\\{compiler.Project.Name}'...");
-            CompileResult r = compiler.Compile(output);
+            CompileResult r = compiler.Compile(output, Console.WriteLine);
 
             Console.WriteLine();
             Console.WriteLine($"Total time was: {compiler.Project.Elapsed:0.00} seconds!");
@@ -37,7 +37,7 @@ namespace Dialang.Compilation.Tool
         GetInputPath:
 
             input = Console.ReadLine()!;
-            if (!Compiler.ValidInput(input))
+            if (!ProjectCompiler.ValidInput(input))
             {
                 Console.Write("\n\nInvalid file. Please try again.");
                 Console.SetCursorPosition(0, 1);
